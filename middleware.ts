@@ -7,6 +7,30 @@ import type { Database } from "@/lib/database.types";
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient<Database>({ req, res });
-  await supabase.auth.getSession();
+  const sessionResponse = await supabase.auth.getSession();
+
+  const { pathname } = req.nextUrl;
+  if (
+    !!sessionResponse.data.session &&
+    (pathname === "/sign-in" || pathname === "/sign-up")
+  ) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
+  if (
+    !sessionResponse.data.session &&
+    !(pathname === "/sign-in" || pathname === "/sign-up")
+  ) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/sign-in";
+    return NextResponse.redirect(url);
+  }
+
   return res;
 }
+
+export const config = {
+  matcher: ["/", "/profile", "/sign-in", "/sign-up"],
+};

@@ -38,15 +38,17 @@ async function Header() {
               </>
             </div>
           ) : (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center">
               <ProfileDropdown
                 name={profile?.username!}
                 email={session.user.email!}
                 imageUrl={undefined}
+                postfix={
+                  <div className="sm:hidden text-gray-500 cursor-pointer">
+                    <NavigationMenu />
+                  </div>
+                }
               />
-              <div className="sm:hidden text-gray-500 cursor-pointer">
-                <NavigationMenu />
-              </div>
             </div>
           )}
         </div>
