@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/clients/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/lib/database.types";
 
 const signInFormData = z.object({
   email: z.string().email(),
@@ -15,7 +17,9 @@ type SignInFormData = z.infer<typeof signInFormData>;
 export default function SignIn() {
   const [info, setInfo] = useState<ReactNode>();
   const [loading, setLoading] = useState<boolean>(false);
+  const supabase = createClientComponentClient<Database>();
 
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,8 +36,8 @@ export default function SignIn() {
       password: data.password,
     });
     if (!signInResponse.error) {
-      console.log(signInResponse.data);
-      //TODO: set session as cookie
+      router.push("../");
+      router.refresh();
     } else {
       console.log(signInResponse.error);
       console.log("signInResponse.error.message", signInResponse.error.message);

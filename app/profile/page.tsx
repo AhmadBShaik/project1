@@ -17,11 +17,15 @@ export default async function Home() {
   if (!session) {
     redirect("/sign-in");
   }
+  const { data: profiles } = await supabase.from("profile").select();
+  const profile = profiles?.[0];
+  console.log("profile", profile);
 
   return (
     <main className="flex-1 mt-20 w-full">
       <section className="max-w-4xl mx-auto px-5">
-        This is project 1
+        <div>name: {profile?.username}</div>
+        <div>email: {session.user.email}</div>
       </section>
     </main>
   );

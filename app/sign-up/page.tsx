@@ -5,7 +5,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/clients/supabase";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/lib/database.types";
 
 const signUpFormData = z
   .object({
@@ -25,6 +26,7 @@ export default function SignUp() {
   const [info, setInfo] = useState<ReactNode>();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const supabase = createClientComponentClient<Database>();
 
   const {
     register,
@@ -71,8 +73,7 @@ export default function SignUp() {
       );
       setLoading(false);
     }
-
-    // router.refresh();
+    
   };
   return (
     <>
