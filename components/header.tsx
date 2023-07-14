@@ -17,7 +17,7 @@ async function Header() {
 
   return (
     <>
-      <header className="fixed bg-orange-50 w-full p-3 text-orange-500 bg-opacity-80 border-b border-orange-100 max-w-6xl mx-auto">
+      <header className="fixed bg-transparent w-full p-3 text-orange-500 backdrop-blur-md border-b border-gray-200 max-w-6xl mx-auto">
         <div className="flex justify-between items-center">
           <div className="font-bold text-2xl cursor-default">Project 1</div>
           {!session ? (

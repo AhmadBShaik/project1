@@ -3,7 +3,7 @@ import { Database } from "@/lib/database.types";
 import { Menu } from "@headlessui/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
 export function ProfileDropdown({
@@ -19,6 +19,7 @@ export function ProfileDropdown({
 }) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
+  const pathname = usePathname();
 
   return (
     <div className="relative flex items-center">
@@ -31,7 +32,7 @@ export function ProfileDropdown({
                   src="/default-profile-avatar.svg"
                   width={35}
                   height={35}
-                  className="rounded-full"
+                  className="rounded-full bg-white"
                   alt="Profile Avatar"
                 />
               </div>
@@ -48,7 +49,7 @@ export function ProfileDropdown({
                 src="/default-profile-avatar.svg"
                 width={35}
                 height={35}
-                className="rounded-full"
+                className="rounded-full bg-white"
                 alt="Profile Avatar"
               />
             </div>
@@ -72,12 +73,52 @@ export function ProfileDropdown({
                   className={`${
                     active && "bg-orange-500 text-white rounded"
                   } cursor-pointer px-2.5 py-1`}
-                  onClick={async () => {
-                    router.push("/profile");
-                    router.refresh();
-                  }}
+                  onClick={
+                    pathname === "/"
+                      ? undefined
+                      : async () => {
+                          console.log("pathname", pathname);
+                          router.push("/");
+                        }
+                  }
+                >
+                  Home
+                </div>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <div
+                  className={`${
+                    active && "bg-orange-500 text-white rounded"
+                  } cursor-pointer px-2.5 py-1`}
+                  onClick={
+                    pathname === "/profile"
+                      ? undefined
+                      : async () => {
+                          router.push("/profile");
+                        }
+                  }
                 >
                   Profile
+                </div>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <div
+                  className={`${
+                    active && "bg-orange-500 text-white rounded"
+                  } cursor-pointer px-2.5 py-1`}
+                  onClick={
+                    pathname === "/pricing"
+                      ? undefined
+                      : async () => {
+                          router.push("/pricing");
+                        }
+                  }
+                >
+                  Pricing
                 </div>
               )}
             </Menu.Item>
