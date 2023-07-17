@@ -17,7 +17,6 @@ export async function GET(): Promise<
     name: "Ahmad",
     email: "ahmad.shaik1106@gmail.com",
   });
-  console.log("data", userValidation);
 
   if (userValidation.success) {
     return NextResponse.json({

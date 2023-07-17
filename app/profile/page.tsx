@@ -20,13 +20,12 @@ export default async function Profile() {
   }
   const { data: profiles } = await supabase.from("profile").select();
   const profile = profiles?.[0];
-  console.log("profile", profile);
 
   return (
     <main className="flex-1 mt-20 w-full">
       <section className="max-w-6xl mx-auto px-5">
-        <div className="p-5 rounded-2xl border border-gray-200 bg-white shadow-md flex flex-col items-center sm:hidden">
-          <div className="w-full border-b border-gray-200 mb-5 pb-3 flex justify-center">
+        <div className="p-5 rounded-2xl border border-neutral-600 bg-neutral-800 shadow-md flex flex-col items-center sm:hidden">
+          <div className="w-full border-b border-neutral-600 mb-5 pb-3 flex justify-center">
             <Image
               src="/default-profile-avatar.svg"
               width={75}
@@ -35,12 +34,12 @@ export default async function Profile() {
               alt="Profile Avatar"
             />
           </div>
-          <div className="text-xl text-orange-500 font-bold">
+          <div className="text-xl text-green-500 font-bold">
             {profile?.username}
           </div>
-          <div className="text-lg text-orange-500"> {session.user.email}</div>
+          <div className="text-lg text-green-500"> {session.user.email}</div>
         </div>
-        <div className="p-5 rounded-2xl border border-gray-200 bg-white shadow-md hidden sm:flex items-center space-x-5 max-w-md">
+        <div className="p-5 rounded-2xl border border-neutral-600 bg-neutral-800 shadow-md hidden sm:flex items-center space-x-5 max-w-md">
           <div className="">
             <Image
               src="/default-profile-avatar.svg"
@@ -51,10 +50,10 @@ export default async function Profile() {
             />
           </div>
           <div>
-            <div className="text-xl text-orange-500 font-bold">
+            <div className="text-xl text-green-500 font-bold">
               {profile?.username}
             </div>
-            <div className="text-lg text-orange-500"> {session.user.email}</div>
+            <div className="text-lg text-green-500"> {session.user.email}</div>
           </div>
         </div>
       </section>

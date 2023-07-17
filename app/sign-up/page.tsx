@@ -50,7 +50,7 @@ export default function SignUp() {
       setInfo(
         <div
           className={
-            "w-full bg-green-200 text-green-700 border border-green-500 rounded-lg py-2 space-y-1"
+            "w-full bg-green-200 text-green-700 border border-green-300 rounded py-2 space-y-1"
           }
         >
           <div className="text-center font-bold">Success!</div>
@@ -59,12 +59,11 @@ export default function SignUp() {
           </div>
         </div>
       );
-      console.log("signUpResponse", signUpResponse);
     } else {
       setInfo(
         <div
           className={
-            "w-full bg-red-200 text-red-700 border border-red-500 rounded-lg py-2 space-y-1"
+            "w-full bg-red-200 text-red-700 border border-red-300 rounded py-2 space-y-1"
           }
         >
           <div className="text-center font-bold">Something went wrong!</div>
@@ -73,25 +72,24 @@ export default function SignUp() {
       );
       setLoading(false);
     }
-    
   };
   return (
     <>
       <main className="flex-1 mt-18 w-full flex items-center justify-center p-3 mt-20">
-        <section className="w-full max-w-lg bg-orange-200 p-5 shadow-md rounded-md">
-          <form className="space-y-3" onSubmit={handleSubmit(submitData)}>
-            <legend className="text-orange-500 mb-5">
+        <section className="w-full max-w-lg bg-neutral-800 p-5 shadow-md rounded-md">
+          <form className="space-y-3" onSubmit={handleSubmit(submitData)} autoComplete="off">
+            <legend className="text-green-500 mb-5">
               <div className="font-bold text-2xl">Get started</div>
               <div className="text-sm">Create a new account</div>
             </legend>
             {!!info ? <>{info}</> : null}
 
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700">
+              <span className="block text-sm font-medium text-neutral-200">
                 Email
               </span>
               <input
-                className="w-full outline-0 px-2 py-0.5 rounded"
+                className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
                 placeholder="Enter email"
                 {...register("email")}
               />
@@ -103,26 +101,26 @@ export default function SignUp() {
             </label>
 
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700">
+              <span className="block text-sm font-medium text-neutral-200">
                 Password
               </span>
               <div className="relative">
                 <input
-                  className="w-full outline-0 px-2 py-0.5 rounded"
+                  className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter Password"
                   {...register("password")}
                 />
                 {showPassword ? (
                   <Eye
-                    className="absolute text-orange-500 top-0.5 right-2.5 w-5 cursor-pointer"
+                    className="absolute text-green-500 top-0.5 right-2.5 w-5 cursor-pointer"
                     onClick={() => {
                       setShowPassword((prevState) => !prevState);
                     }}
                   />
                 ) : (
                   <EyeOff
-                    className="absolute text-orange-500 top-0.5 right-2.5 w-5 cursor-pointer"
+                    className="absolute text-green-500 top-0.5 right-2.5 w-5 cursor-pointer"
                     onClick={() => {
                       setShowPassword((prevState) => !prevState);
                     }}
@@ -137,11 +135,11 @@ export default function SignUp() {
             </label>
 
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700">
+              <span className="block text-sm font-medium text-neutral-200">
                 Confirm Password
               </span>
               <input
-                className="w-full outline-0 px-2 py-0.5 rounded"
+                className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
                 type="password"
                 placeholder="Confirm Password"
                 {...register("confirmPassword")}
@@ -152,15 +150,16 @@ export default function SignUp() {
                 </span>
               ) : null}
             </label>
-
-            <input
-              disabled={loading}
-              type="submit"
-              value={"Sign Up"}
-              className={`w-full font-bold ${
-                loading ? "bg-orange-300" : "bg-orange-500"
-              } text-orange-50 py-2 rounded cursor-pointer`}
-            />
+            <div className="pt-5">
+              <input
+                disabled={loading}
+                type="submit"
+                value={"Sign Up"}
+                className={`w-full font-bold ${
+                  loading ? "bg-green-300" : "bg-green-500"
+                } text-neutral-100 py-2 rounded cursor-pointer`}
+              />
+            </div>
           </form>
         </section>
       </main>

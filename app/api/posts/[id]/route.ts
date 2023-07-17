@@ -18,7 +18,6 @@ export async function GET(
     | { error: string }
   >
 > {
-  console.log("id", context.params.id);
   const post = posts.find((post) => post.id === context.params.id);
   if (!post) {
     return NextResponse.json(

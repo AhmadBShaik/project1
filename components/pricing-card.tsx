@@ -38,11 +38,10 @@ function PricingCard({
       stripe?.redirectToCheckout({ sessionId: data.sessionId });
     } catch (error) {
       setLoading(false);
-      console.log("Stripe Error while calling /api/payment", error);
     }
   };
   return (
-    <div className="border bg-white border-gray-300 hover:border-orange-500 rounded-lg p-5 cursor-pointer shadow-lg hover:shadow-xl">
+    <div className="border bg-neutral-800 border-neutral-600 hover:border-green-500 rounded-lg p-5 cursor-pointer shadow-lg hover:shadow-xl">
       <h2 className="text-xl sm:text-2xl font-bold mb-2">{price.nickname}</h2>
       <p className="mb-10">Access to personalized content</p>
 
@@ -60,8 +59,8 @@ function PricingCard({
       <button
         disabled={loading}
         className={`${
-          loading ? "bg-orange-300" : "bg-orange-400 hover:bg-orange-500"
-        } text-white p-1.5 font-bold w-full text-md sm:text-lg text-center rounded`}
+          loading ? "bg-green-300" : "bg-green-400 hover:bg-green-500"
+        } text-neutral-100 p-1.5 font-bold w-full text-md sm:text-lg text-center rounded`}
         onClick={handleSubscription}
       >
         Subscribe

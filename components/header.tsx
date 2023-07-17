@@ -13,11 +13,9 @@ async function Header() {
   } = await supabase.auth.getSession();
   const { data: profiles } = await supabase.from("profile").select();
   const profile = profiles?.[0];
-  console.log("profile", profile);
-
   return (
     <>
-      <header className="fixed bg-transparent w-full p-3 text-orange-500 backdrop-blur-md border-b border-gray-200 max-w-6xl mx-auto">
+      <header className="fixed bg-transparent w-full p-3 text-green-500 backdrop-blur-md border-b border-green-200 max-w-6xl mx-auto">
         <div className="flex justify-between items-center">
           <div className="font-bold text-2xl cursor-default">Project 1</div>
           {!session ? (
@@ -25,13 +23,13 @@ async function Header() {
               <>
                 <Link
                   href={"/sign-in"}
-                  className="hover:bg-opacity-75 hover:text-orange-400 font-bold text-orange-500 bg-orange-100 px-3 py-2 rounded"
+                  className="hover:bg-opacity-75  font-bold text-green-500 bg-neutral-800 px-3 py-2 rounded"
                 >
                   Sign In
                 </Link>
                 <Link
                   href={"/sign-up"}
-                  className="hover:bg-opacity-75 hover:text-orange-100 font-bold text-white bg-orange-500 px-3 py-2 rounded"
+                  className="hover:bg-opacity-75 font-bold text-white bg-green-500 px-3 py-2 rounded"
                 >
                   Sign Up
                 </Link>

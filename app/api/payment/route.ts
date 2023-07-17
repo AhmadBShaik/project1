@@ -14,7 +14,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
   if (!user) {
     return NextResponse.json({ message: "unauthorized" }, { status: 401 });
   }
-  console.log("user", user);
 
   const { price, quantity = 1, metadata = {} } = await req.json();
 
@@ -37,7 +36,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     cancel_url: `${getURL()}/`,
   });
 
-  console.log("stripe session", session);
   return NextResponse.json(
     {
       sessionId: session.id,

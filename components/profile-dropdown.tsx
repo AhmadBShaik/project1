@@ -37,8 +37,8 @@ export function ProfileDropdown({
                 />
               </div>
               <div className="text-left">
-                <div className="text-sm font-bold">{name}</div>
-                <div className="text-xs">{email}</div>
+                <div className="text-sm font-bold tracking-wide	">{name}</div>
+                <div className="text-xs tracking-wide	">{email}</div>
               </div>
             </div>
           </div>
@@ -56,14 +56,14 @@ export function ProfileDropdown({
           </div>
         </Menu.Button>
         <Menu.Items>
-          <div className="absolute right-0 top-4.5 z-10 mt-6 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none space-y-1 p-2.5">
+          <div className="absolute right-0 top-5.5 z-10 mt-6 w-56 origin-top-right rounded-md bg-neutral-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none space-y-1 p-2.5">
             <Menu.Item>
               {({ active }) => (
                 <div
-                  className={`cursor-pointer px-2.5 py-1 border-b border-orange-200 mb-2 sm:hidden`}
+                  className={`cursor-pointer px-2.5 py-1 border-b border-green-800 mb-2 sm:hidden`}
                 >
-                  <div className="text-sm font-bold">{name}</div>
-                  <div className="text-sm">{email}</div>
+                  <div className="text-sm font-bold tracking-wide">{name}</div>
+                  <div className="text-sm tracking-wide">{email}</div>
                 </div>
               )}
             </Menu.Item>
@@ -71,13 +71,12 @@ export function ProfileDropdown({
               {({ active }) => (
                 <div
                   className={`${
-                    active && "bg-orange-500 text-white rounded"
+                    active && "bg-green-500 text-white rounded"
                   } cursor-pointer px-2.5 py-1`}
                   onClick={
                     pathname === "/"
                       ? undefined
                       : async () => {
-                          console.log("pathname", pathname);
                           router.push("/");
                         }
                   }
@@ -90,7 +89,7 @@ export function ProfileDropdown({
               {({ active }) => (
                 <div
                   className={`${
-                    active && "bg-orange-500 text-white rounded"
+                    active && "bg-green-500 text-white rounded"
                   } cursor-pointer px-2.5 py-1`}
                   onClick={
                     pathname === "/profile"
@@ -108,7 +107,7 @@ export function ProfileDropdown({
               {({ active }) => (
                 <div
                   className={`${
-                    active && "bg-orange-500 text-white rounded"
+                    active && "bg-green-500 text-white rounded"
                   } cursor-pointer px-2.5 py-1`}
                   onClick={
                     pathname === "/pricing"
@@ -126,7 +125,7 @@ export function ProfileDropdown({
               {({ active }) => (
                 <div
                   className={`${
-                    active && "bg-orange-500 text-white rounded"
+                    active && "bg-green-500 text-white rounded"
                   } cursor-pointer px-2.5 py-1`}
                   onClick={async () => {
                     await supabase.auth.signOut();

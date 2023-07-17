@@ -6,7 +6,7 @@ export const metadata = {
 export default async function Home() { 
   return (
     <main className="flex-1 mt-20 w-full">
-      <section className="max-w-6xl mx-auto px-5">
+      <section className="max-w-6xl mx-auto px-5 text-neutral-100">
         This is project 1
       </section>
     </main>
