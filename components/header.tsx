@@ -15,40 +15,49 @@ async function Header() {
   const profile = profiles?.[0];
   return (
     <>
-      <header className="fixed bg-transparent w-full p-3 text-green-500 backdrop-blur-md border-b border-green-200 max-w-6xl mx-auto">
-        <div className="flex justify-between items-center">
-          <div className="font-bold text-2xl cursor-default">Project 1</div>
-          {!session ? (
-            <div className="space-x-5 text-xs hidden sm:block">
-              <>
-                <Link
-                  href={"/sign-in"}
-                  className="hover:bg-opacity-75  font-bold text-green-500 bg-neutral-800 px-3 py-2 rounded"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href={"/sign-up"}
-                  className="hover:bg-opacity-75 font-bold text-white bg-green-500 px-3 py-2 rounded"
-                >
-                  Sign Up
-                </Link>
-              </>
+      <header className="fixed w-full h-16 sm:h-20 text-green-500">
+        <div className="flex">
+          <div className="hidden xl:block w-2/12"></div>
+          <div className="flex-1">
+            <div className="flex-1 mx-auto flex justify-between items-center xl:px-0 bg-transparent backdrop-blur-md py-3.5 px-2.5 sm:pt-5 sm:pt-4.5">
+              <div className="font-bold text-2xl sm:text-3xl cursor-default">
+                Project 1
+              </div>
+              {!session ? (
+                <div className="space-x-5 text-xs hidden sm:block">
+                  <>
+                    <Link
+                      href={"/sign-in"}
+                      className="hover:bg-opacity-75  font-bold text-green-500 bg-neutral-800 px-3 py-2 rounded"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href={"/sign-up"}
+                      className="hover:bg-opacity-75 font-bold text-white bg-green-500 px-3 py-2 rounded"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <ProfileDropdown
+                    name={profile?.name!}
+                    email={session.user.email!}
+                    imageUrl={undefined}
+                    postfix={
+                      <div className="sm:hidden text-gray-500 cursor-pointer">
+                        <NavigationMenu />
+                      </div>
+                    }
+                  />
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="flex items-center">
-              <ProfileDropdown
-                name={profile?.username!}
-                email={session.user.email!}
-                imageUrl={undefined}
-                postfix={
-                  <div className="sm:hidden text-gray-500 cursor-pointer">
-                    <NavigationMenu />
-                  </div>
-                }
-              />
-            </div>
-          )}
+            <div className="border-b border-green-500 "></div>
+          </div>
+          <div className="hidden xl:block w-2/12"></div>
         </div>
       </header>
     </>

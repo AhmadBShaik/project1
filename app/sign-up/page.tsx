@@ -10,6 +10,7 @@ import { Database } from "@/lib/database.types";
 
 const signUpFormData = z
   .object({
+    name: z.string().min(3).max(20),
     email: z.string().email(),
     password: z.string().min(6).max(20),
     confirmPassword: z.string().min(6).max(20),
@@ -25,7 +26,6 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [info, setInfo] = useState<ReactNode>();
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
   const {
@@ -47,6 +47,10 @@ export default function SignUp() {
     });
 
     if (!signUpResponse.error) {
+      // console.log("signUpResponse", signUpResponse.data.user);
+      // await supabase
+      //   .from("profile")
+      //   .insert({ name: data.name, user_id: signUpResponse.data.user?.id! });
       setInfo(
         <div
           className={
@@ -77,12 +81,32 @@ export default function SignUp() {
     <>
       <main className="flex-1 mt-18 w-full flex items-center justify-center p-3 mt-20">
         <section className="w-full max-w-lg bg-neutral-800 p-5 shadow-md rounded-md">
-          <form className="space-y-3" onSubmit={handleSubmit(submitData)} autoComplete="off">
+          <form
+            className="space-y-3"
+            onSubmit={handleSubmit(submitData)}
+            autoComplete="off"
+          >
             <legend className="text-green-500 mb-5">
               <div className="font-bold text-2xl">Get started</div>
               <div className="text-sm">Create a new account</div>
             </legend>
             {!!info ? <>{info}</> : null}
+
+            <label className="block">
+              <span className="block text-sm font-medium text-neutral-200">
+                Name
+              </span>
+              <input
+                className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
+                placeholder="Enter name"
+                {...register("name")}
+              />
+              {errors.name ? (
+                <span className="text-sm text-red-500">
+                  {errors.name.message}
+                </span>
+              ) : null}
+            </label>
 
             <label className="block">
               <span className="block text-sm font-medium text-neutral-200">
@@ -108,7 +132,7 @@ export default function SignUp() {
                 <input
                   className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter Password"
+                  placeholder="Enter password"
                   {...register("password")}
                 />
                 {showPassword ? (
@@ -136,12 +160,12 @@ export default function SignUp() {
 
             <label className="block">
               <span className="block text-sm font-medium text-neutral-200">
-                Confirm Password
+                Confirm password
               </span>
               <input
                 className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
                 type="password"
-                placeholder="Confirm Password"
+                placeholder="Confirm password"
                 {...register("confirmPassword")}
               />
               {errors.confirmPassword ? (

@@ -22,41 +22,37 @@ export default async function Profile() {
   const profile = profiles?.[0];
 
   return (
-    <main className="flex-1 mt-20 w-full">
-      <section className="max-w-6xl mx-auto px-5">
-        <div className="p-5 rounded-2xl border border-neutral-600 bg-neutral-800 shadow-md flex flex-col items-center sm:hidden">
-          <div className="w-full border-b border-neutral-600 mb-5 pb-3 flex justify-center">
-            <Image
-              src="/default-profile-avatar.svg"
-              width={75}
-              height={75}
-              className="rounded-full bg-white"
-              alt="Profile Avatar"
-            />
-          </div>
+    <section className="flex-1 px-5 xl:px-0 mt-5">
+      <div className="p-5 rounded-2xl border border-neutral-600 bg-neutral-800 shadow-md flex flex-col items-center sm:hidden">
+        <div className="w-full border-b border-neutral-600 mb-5 pb-3 flex justify-center">
+          <Image
+            src="/default-profile-avatar.svg"
+            width={75}
+            height={75}
+            className="rounded-full bg-white"
+            alt="Profile Avatar"
+          />
+        </div>
+        <div className="text-xl text-green-500 font-bold">{profile?.name}</div>
+        <div className="text-lg text-green-500"> {session.user.email}</div>
+      </div>
+      <div className="p-5 rounded-2xl border border-neutral-600 bg-neutral-800 shadow-md hidden sm:flex items-center space-x-5 max-w-md">
+        <div className="">
+          <Image
+            src="/default-profile-avatar.svg"
+            width={75}
+            height={75}
+            className="rounded-full bg-white"
+            alt="Profile Avatar"
+          />
+        </div>
+        <div>
           <div className="text-xl text-green-500 font-bold">
-            {profile?.username}
+            {profile?.name}
           </div>
           <div className="text-lg text-green-500"> {session.user.email}</div>
         </div>
-        <div className="p-5 rounded-2xl border border-neutral-600 bg-neutral-800 shadow-md hidden sm:flex items-center space-x-5 max-w-md">
-          <div className="">
-            <Image
-              src="/default-profile-avatar.svg"
-              width={75}
-              height={75}
-              className="rounded-full bg-white"
-              alt="Profile Avatar"
-            />
-          </div>
-          <div>
-            <div className="text-xl text-green-500 font-bold">
-              {profile?.username}
-            </div>
-            <div className="text-lg text-green-500"> {session.user.email}</div>
-          </div>
-        </div>
-      </section>
-    </main>
+      </div>
+    </section>
   );
 }

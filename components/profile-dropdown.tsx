@@ -37,8 +37,8 @@ export function ProfileDropdown({
                 />
               </div>
               <div className="text-left">
-                <div className="text-sm font-bold tracking-wide	">{name}</div>
-                <div className="text-xs tracking-wide	">{email}</div>
+                <div className="text font-bold tracking-wide	">{name}</div>
+                <div className="text-sm tracking-wide	">{email}</div>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@ export function ProfileDropdown({
                 <div
                   className={`cursor-pointer px-2.5 py-1 border-b border-green-800 mb-2 sm:hidden`}
                 >
-                  <div className="text-sm font-bold tracking-wide">{name}</div>
+                  <div className="text font-bold tracking-wide">{name}</div>
                   <div className="text-sm tracking-wide">{email}</div>
                 </div>
               )}
@@ -103,6 +103,25 @@ export function ProfileDropdown({
                 </div>
               )}
             </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <div
+                  className={`${
+                    active && "bg-green-500 text-white rounded"
+                  } cursor-pointer px-2.5 py-1`}
+                  onClick={
+                    pathname === "/agents"
+                      ? undefined
+                      : async () => {
+                          router.push("/agents");
+                        }
+                  }
+                >
+                  Agents
+                </div>
+              )}
+            </Menu.Item>
+
             <Menu.Item>
               {({ active }) => (
                 <div

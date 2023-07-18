@@ -8,9 +8,8 @@ export default function Pricing() {
     useState<Stripe.Price.Recurring.Interval>("month");
 
   return (
-    <main className="flex-1 mt-20 w-full flex flex-col">
-      <section className="flex-1 w-full max-w-6xl mx-auto px-5 flex flex-col">
-        <div className="flex-1 p-5 flex flex-col space-y-8">
+      <section className="flex-1 w-full mx-auto p-5 xl:px-0 flex flex-col">
+        <div className="flex-1 flex flex-col space-y-8">
           <div className="text-center space-y-2 mb-5">
             <h1 className="text-green-500  text-4xl sm:text-5xl md:text-6xl font-bold">
               Pricing Plans
@@ -43,6 +42,5 @@ export default function Pricing() {
           <PricingCards planInterval={planInterval} />
         </div>
       </section>
-    </main>
   );
 }

@@ -19,10 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* <body className={`flex min-h-screen flex-col items-center justify-between ${inter}`}> */}
-      <body className={`flex min-h-screen flex-col items-center justify-between ${inter.className}`}>
+      <body
+        className={`flex min-h-screen flex-col items-center justify-between ${inter.className}`}
+      >
         <Header />
-        {children}
+        <main className="mt-16 sm:mt-20 flex-1 flex w-full">{children}</main>
         <Footer />
       </body>
     </html>
