@@ -4,8 +4,17 @@ import AgentCard from "./agent-card";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
 import useSWR from "swr";
-import { useRouter } from "next/navigation";
-import { Loader } from "react-feather";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const agentFormData = z.object({
+  name: z.string().min(3),
+  purpose: z.string().min(10),
+  instructions: z.string().optional().array(),
+});
+
+type AgentFormData = z.infer<typeof agentFormData>;
 
 function AgentCreationForm({
   setShowForm,
@@ -24,7 +33,6 @@ function AgentCreationForm({
   setInstructions: React.Dispatch<React.SetStateAction<string[]>>;
   instructions: string[];
 }) {
-  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState<boolean>(false);
   const { data: session } = useSWR("/session", async () => {
@@ -34,8 +42,39 @@ function AgentCreationForm({
     return session;
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AgentFormData>({
+    resolver: zodResolver(agentFormData),
+  });
+
+  const submitData = async (data: AgentFormData) => {
+    if (!errors.name && !errors.purpose) {
+      setLoading(true);
+      const insertResponse = await supabase.from("agent").insert({
+        name,
+        purpose,
+        instructions,
+        user_id: session?.user.id,
+      });
+      if (!insertResponse.error) {
+        setName("");
+        setPurpose("");
+        setInstructions([""]);
+      } else {
+        console.log("Error while adding agent", insertResponse.error);
+      }
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="space-y-3 w-full max-w-3xl mx-auto text-green-500 p-5 sm:px-0">
+    <form
+      className="space-y-3 w-full max-w-3xl mx-auto text-green-500 p-5 sm:px-0"
+      onSubmit={handleSubmit(submitData)}
+    >
       <legend className="text-green-500 mb-5">
         <div className="font-bold text-2xl">Create an Agent</div>
         <div className="text-sm md:text-lg xl:text-xl"></div>
@@ -45,6 +84,7 @@ function AgentCreationForm({
           Name
         </span>
         <input
+          {...register("name")}
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -52,12 +92,16 @@ function AgentCreationForm({
           className="w-full outline-0 px-2 py-0.5 bg-neutral-950 focus:border-b border-green-500"
           placeholder="Agent name"
         />
+        {errors.name ? (
+          <span className="text-sm text-red-500">{errors.name.message}</span>
+        ) : null}
       </label>
       <label className="block">
         <span className="block text-sm md:text-lg xl:text-xl font-medium text-neutral-200">
           Purpose
         </span>
         <input
+          {...register("purpose")}
           value={purpose}
           onChange={(e) => {
             setPurpose(e.target.value);
@@ -66,6 +110,9 @@ function AgentCreationForm({
           type="text"
           placeholder="Purpose"
         />
+        {errors.purpose ? (
+          <span className="text-sm text-red-500">{errors.purpose.message}</span>
+        ) : null}
       </label>
       <label className="block">
         <span className="block text-sm md:text-lg xl:text-xl font-medium text-neutral-200">
@@ -81,6 +128,7 @@ function AgentCreationForm({
                 <div className="text-green-500 absolute text-xl left-2">#</div>
                 <div style={{ flex: 1 }}>
                   <input
+                    {...register(`instructions.${index}`)}
                     value={instruction}
                     className="w-full outline-0 px-2.5 py-0.5 bg-neutral-950 focus:border-b border-green-500 pl-5 ml-2.5"
                     onChange={(e) => {
@@ -140,44 +188,16 @@ function AgentCreationForm({
         >
           Reset
         </button>
-        <button
+        <input
+          type="submit"
+          value={"Let's go"}
           disabled={loading}
           className={`${
             loading ? "bg-green-400" : "bg-green-500"
           } text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold`}
-          onClick={
-            loading
-              ? undefined
-              : async () => {
-                  setLoading(true);
-                  const insertResponse = await supabase.from("agent").insert({
-                    name,
-                    purpose,
-                    instructions,
-                    user_id: session?.user.id,
-                  });
-
-                  if (!insertResponse.error) {
-                    router.push("/agents");
-                  } else {
-                    console.log(
-                      "Error while adding agent",
-                      insertResponse.error
-                    );
-                  }
-                  setLoading(false);
-                  console.log(insertResponse.data, insertResponse.error);
-                }
-          }
-        >
-          {loading ? (
-            <Loader className="text-green-700 animate-spin w-5 mx-5" />
-          ) : (
-            <>Let's go</>
-          )}
-        </button>
+        />
       </div>
-    </div>
+    </form>
   );
 }
 

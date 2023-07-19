@@ -1,33 +1,38 @@
 "use client";
 import { Database } from "@/lib/database.types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Loader } from "react-feather";
+import { useForm } from "react-hook-form";
 import useSWR from "swr";
+import { z } from "zod";
+
+const agentFormData = z.object({
+  name: z.string().min(3),
+  purpose: z.string().min(10),
+  instructions: z.string().optional().array(),
+});
+
+type AgentFormData = z.infer<typeof agentFormData>;
+
 function AgentUpdationForm({
   instructions,
   setInstructions,
+  agentId,
   name,
   setName,
   purpose,
   setPurpose,
-  agent,
 }: {
+  agentId: string;
   name: string;
   purpose: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   setPurpose: React.Dispatch<React.SetStateAction<string>>;
   setInstructions: React.Dispatch<React.SetStateAction<string[]>>;
   instructions: string[];
-  agent?: {
-    created_at: string | null;
-    id: string;
-    name: string;
-    purpose: string;
-    instructions: string[];
-    user_id: string | null;
-  };
 }) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
@@ -38,8 +43,52 @@ function AgentUpdationForm({
     } = await supabase.auth.getSession();
     return session;
   });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AgentFormData>({
+    resolver: zodResolver(agentFormData),
+  });
+
+  useEffect(() => {
+    reset({
+      name: name,
+      purpose: purpose,
+      instructions: instructions,
+    });
+  }, []);
+  const submitData = async (data: AgentFormData) => {
+    if (!errors.name && !errors.purpose) {
+      setLoading(true);
+      const updateResponse = await supabase
+        .from("agent")
+        .update({
+          name,
+          purpose,
+          instructions:
+            instructions.length === 1 && instructions[0].trim() === ""
+              ? []
+              : instructions,
+        })
+        .eq("id", agentId);
+
+      if (!updateResponse.error) {
+        router.push("/agents");
+      } else {
+        console.log("Error while adding agent", updateResponse.error);
+      }
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="space-y-3 w-full max-w-3xl mx-auto text-green-500 p-5 sm:px-0">
+    <form
+      className="space-y-3 w-full max-w-3xl mx-auto text-green-500 p-5 sm:px-0"
+      onSubmit={handleSubmit(submitData)}
+    >
       <legend className="text-green-500 mb-5">
         <div className="font-bold text-2xl">Update Agent</div>
         <div className="text-sm md:text-lg xl:text-xl"></div>
@@ -49,21 +98,24 @@ function AgentUpdationForm({
           Name
         </span>
         <input
+          {...register("name")}
           value={name}
-          defaultValue={agent?.name}
           onChange={(e) => {
             setName(e.target.value);
           }}
           className="w-full outline-0 px-2 py-0.5 bg-neutral-950 focus:border-b border-green-500"
           placeholder="Agent name"
         />
+        {errors.name ? (
+          <span className="text-sm text-red-500">{errors.name.message}</span>
+        ) : null}
       </label>
       <label className="block">
         <span className="block text-sm md:text-lg xl:text-xl font-medium text-neutral-200">
           Purpose
         </span>
         <input
-          defaultValue={agent?.purpose}
+          {...register("purpose")}
           value={purpose}
           onChange={(e) => {
             setPurpose(e.target.value);
@@ -72,6 +124,9 @@ function AgentUpdationForm({
           type="text"
           placeholder="Purpose"
         />
+        {errors.purpose ? (
+          <span className="text-sm text-red-500">{errors.purpose.message}</span>
+        ) : null}
       </label>
       <label className="block">
         <span className="block text-sm md:text-lg xl:text-xl font-medium text-neutral-200">
@@ -87,6 +142,7 @@ function AgentUpdationForm({
                 <div className="text-green-500 absolute text-xl left-2">#</div>
                 <div style={{ flex: 1 }}>
                   <input
+                    {...register(`instructions.${index}`)}
                     value={instruction}
                     className="w-full outline-0 px-2.5 py-0.5 bg-neutral-950 focus:border-b border-green-500 pl-5 ml-2.5"
                     onChange={(e) => {
@@ -112,7 +168,11 @@ function AgentUpdationForm({
                         return false;
                       }
 
-                      if (e.code === "Backspace" && !instruction) {
+                      if (
+                        e.code === "Backspace" &&
+                        !instruction &&
+                        index !== 0
+                      ) {
                         setInstructions(
                           instructions.filter((ins, i) => i !== index)
                         );
@@ -135,7 +195,7 @@ function AgentUpdationForm({
             const deleteResponse = await supabase
               .from("agent")
               .delete()
-              .eq("id", agent?.id);
+              .eq("id", agentId);
 
             if (!deleteResponse.error) {
               router.push("/agents");
@@ -155,51 +215,17 @@ function AgentUpdationForm({
           >
             Back
           </button>
-          <button
+          <input
+            type="submit"
+            value={"Update"}
             disabled={loading}
             className={`${
               loading ? "bg-green-400" : "bg-green-500"
             } text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold`}
-            onClick={
-              loading
-                ? undefined
-                : async () => {
-                    setLoading(true);
-                    const insertResponse = await supabase
-                      .from("agent")
-                      .update({
-                        name,
-                        purpose,
-                        instructions:
-                          instructions.length === 1 &&
-                          instructions[0].trim() === ""
-                            ? []
-                            : instructions,
-                      })
-                      .eq("id", agent?.id!);
-
-                    if (!insertResponse.error) {
-                      router.push("/agents");
-                    } else {
-                      console.log(
-                        "Error while adding agent",
-                        insertResponse.error
-                      );
-                    }
-                    setLoading(false);
-                    console.log(insertResponse.data, insertResponse.error);
-                  }
-            }
-          >
-            {loading ? (
-              <Loader className="text-green-700 animate-spin w-5 mx-5" />
-            ) : (
-              <>Let's go</>
-            )}
-          </button>
+          />
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 
@@ -209,7 +235,7 @@ function UpdateAgent({ agentId }: { agentId: string }) {
   const [purpose, setPurpose] = useState<string>("");
   const [instructions, setInstructions] = useState<string[]>([""]);
   const supabase = createClientComponentClient<Database>();
-  const { data: agent } = useSWR(`/agents/${agentId}`, async () => {
+  const { data: _ } = useSWR(`/agents/${agentId}`, async () => {
     const response = await supabase
       .from("agent")
       .select()
@@ -222,10 +248,10 @@ function UpdateAgent({ agentId }: { agentId: string }) {
         ? [""]
         : response.data?.[0]?.instructions!
     );
+    console.log("setting states");
     setLoading(false);
     return response.data?.[0];
   });
-  console.log("agentData", agent);
   return (
     <div className="flex-1 flex items-center justify-center ">
       <div className="flex-1 flex flex-col justify-center items-center">
@@ -237,7 +263,7 @@ function UpdateAgent({ agentId }: { agentId: string }) {
             setName={setName}
             purpose={purpose}
             setPurpose={setPurpose}
-            agent={agent}
+            agentId={agentId}
           />
         ) : (
           <Loader className="text-white-500 animate-spin w-15 h-15" />

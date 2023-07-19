@@ -10,17 +10,24 @@ export default async function AgentsLayout({
   children: React.ReactNode;
 }) {
   const supabase = createServerComponentClient<Database>({ cookies });
-  const agentsResponse = await supabase.from("agent").select();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const agentsResponse = await supabase
+    .from("agent")
+    .select()
+    .match({ user_id: user?.id });
   return (
     <section className="flex-1 w-full flex flex-col">
-      <div className="flex-1 flex w-full mt-18">
+      <div className="flex-1 flex w-full">
         <div className="hidden xl:block w-2/12">
-          <SidebarCreateAgent/>
           <ul className="grid grid-cols-1 gap-2 p-2">
             {agentsResponse.data?.map((agent) => (
               <li key={agent.id}>{<AgentCard {...agent} />}</li>
             ))}
           </ul>
+          <SidebarCreateAgent />
         </div>
         {children}
         <div className="hidden xl:block w-2/12"></div>
