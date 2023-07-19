@@ -18,16 +18,32 @@ export default async function AgentsLayout({
     .from("agent")
     .select()
     .match({ user_id: user?.id });
+  const { data: profiles } = await supabase.from("profile").select();
+  const profile = profiles?.[0];
   return (
     <section className="flex-1 w-full flex flex-col">
       <div className="flex-1 flex w-full">
         <div className="hidden xl:block w-2/12">
-          <ul className="grid grid-cols-1 gap-2 p-2">
-            {agentsResponse.data?.map((agent) => (
-              <li key={agent.id}>{<AgentCard {...agent} />}</li>
-            ))}
-          </ul>
-          <SidebarCreateAgent />
+          {profile?.is_admin ? (
+            <div className="px-5 space-y-3">
+              {agentsResponse.data?.length ? (
+                <ul className="grid grid-cols-1 gap-3">
+                  {agentsResponse.data?.map((agent) => (
+                    <li key={agent.id}>
+                      {<AgentCard agent={agent} smallTextOnXl isAdmin />}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="bg-neutral-800 text-neutral-400 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer">
+                  No agents yet!
+                </div>
+              )}
+              <SidebarCreateAgent />
+            </div>
+          ) : (
+            <>{/* TODO: <>normal user flow</> */}</>
+          )}
         </div>
         {children}
         <div className="hidden xl:block w-2/12"></div>

@@ -247,7 +247,7 @@ function CreateAgent() {
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {agents?.map((agent) => (
-                <li key={agent.id}>{<AgentCard {...agent} />}</li>
+                <li key={agent.id}>{<AgentCard agent={agent} isAdmin />}</li>
               ))}
             </ul>
           </div>

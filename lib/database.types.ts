@@ -43,6 +43,43 @@ export interface Database {
           }
         ]
       }
+      agent_instance: {
+        Row: {
+          agent_id: string
+          created_at: string | null
+          id: string
+          meta: Json[]
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string | null
+          id?: string
+          meta?: Json[]
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string | null
+          id?: string
+          meta?: Json[]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_instance_agent_id_fkey"
+            columns: ["agent_id"]
+            referencedRelation: "agent"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_instance_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profile: {
         Row: {
           created_at: string | null

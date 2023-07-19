@@ -5,6 +5,7 @@ import React from "react";
 function AgentCard({
   agent,
   smallTextOnXl,
+  agentInstance,
   isAdmin,
 }: {
   agent: {
@@ -13,6 +14,7 @@ function AgentCard({
     purpose: string;
     instructions: string[];
   };
+  agentInstance:{}
   smallTextOnXl?: boolean;
   isAdmin?: boolean;
 }) {
@@ -20,11 +22,7 @@ function AgentCard({
   return (
     <div
       className="bg-neutral-800 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer"
-      onClick={() => {
-        isAdmin
-          ? router.push(`/agents/${agent.id}`)
-          : router.push(`/agents/${agent.id}/create`);
-      }}
+      onClick={() => {}}
     >
       <div
         className={`font-bold text-md sm:text-xl ${
