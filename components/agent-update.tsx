@@ -46,12 +46,12 @@ function UpdateAgent() {
 
   return (
     <div className="flex-1 flex flex-col justify-center">
-      <div className="flex-1 flex flex-col w-full max-w-3xl">
+      <div className="flex-1 flex flex-col w-full max-w-3xl text-green-500">
         <div className="mt-10">
-          <div className="text-green-500 font-bold text-2xl">
+          <div className="font-bold text-2xl">
             {agents?.[0].agent_template?.name}
           </div>
-          <div className="text-green-500">
+          <div className="">
             {agents?.[0].agent_template?.purpose}
           </div>
         </div>
@@ -65,7 +65,7 @@ function UpdateAgent() {
                     type="text"
                     value={placeholder.value}
                     placeholder={placeholder.name}
-                    className="w-2/3 outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
+                    className="w-2/3 outline-0 px-2 py-0.5 rounded bg-neutral-900"
                     onChange={(e) => {
                       setAllUniquePlaceholders(
                         [

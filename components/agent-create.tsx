@@ -52,10 +52,10 @@ function CreateAgent({
 
   return (
     <div className="flex-1 flex flex-col justify-center">
-      <div className="flex-1 flex flex-col w-full max-w-3xl">
+      <div className="flex-1 flex flex-col w-full max-w-3xl text-green-500">
         <div className="mt-10">
-          <div className="text-green-500 font-bold text-2xl">Hi, I am {name}</div>
-          <div className="text-green-500">{purpose}</div>
+          <div className="font-bold text-2xl">Hi, I am {name}</div>
+          <div className="">{purpose}</div>
         </div>
         <div className="w-full flex-1 flex justify-center items-center">
           <div className="w-full">
@@ -66,7 +66,7 @@ function CreateAgent({
                   <input
                     type="text"
                     placeholder={placeholder.name}
-                    className="w-2/3 outline-0 px-2 py-0.5 rounded bg-neutral-600 text-neutral-100"
+                    className="w-2/3 outline-0 px-2 py-0.5 rounded bg-neutral-900"
                     onChange={(e) => {
                       setAllUniquePlaceholders(
                         [
