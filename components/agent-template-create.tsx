@@ -130,8 +130,8 @@ function AgentTemplateCreationForm({
           {(!!instructions.length ? instructions : [""]).map(
             (instruction, index) => (
               <div key={`instruction-${index}`}>
-                <div className="flex w-full  bg-neutral-900 rounded">
-                  <div className="text-green-500 text-xl px-2.5">#</div>
+                <div className="flex w-full  bg-neutral-900 rounded px-2 space-x-2">
+                  <div className="text-green-500 text-xl">#</div>
                   <div className="flex-1">
                     <input
                       {...register(`instructions.${index}`)}

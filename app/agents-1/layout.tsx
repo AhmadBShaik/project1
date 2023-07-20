@@ -1,4 +1,3 @@
-import SidebarCreateAgent from "@/components/agent-template-sidebar";
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -38,7 +37,6 @@ export default async function AgentsLayout({
                   No agents yet!
                 </div>
               )}
-              <SidebarCreateAgent />
             </div>
           ) : (
             <>{/* TODO: <>normal user flow</> */}</>
