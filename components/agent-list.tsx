@@ -47,14 +47,17 @@ function AgentList() {
           </div>
           <ul className="space-y-5">
             {agents?.map((agent) => (
-              <li key={agent.id} className="bg-neutral-900 hover:bg-neutral-800 p-5 rounded">
+              <li
+                key={agent.id}
+                className="bg-neutral-900 hover:bg-neutral-800 p-5 rounded"
+              >
                 <div className="mb-2">
                   <div className="text-xl ">{agent.agent_template?.name}</div>
                   <div className="">{agent.agent_template?.purpose}</div>
                 </div>
                 <ul>
                   {agent.agent_template?.instructions.map((i) => (
-                    <div>
+                    <div key={i}>
                       {updatedInstruction(
                         i,
                         agent.meta as { name: string; value: string }[]
@@ -71,15 +74,14 @@ function AgentList() {
                         .from("agent")
                         .delete()
                         .eq("id", agent.id);
-
                       if (!deleteResponse.error) {
-                        mutate()
+                        mutate();
                       } else {
                         console.log(
                           "Error while adding agent",
                           deleteResponse.error
                         );
-                      }
+                      }              
                     }}
                   >
                     Delete

@@ -25,7 +25,7 @@ function AgentTemplateDetailCard({
       </div>
       <ul className="mt-5">
         {agentTemplate?.instructions.map((instruction) => (
-          <div className="flex">
+          <div className="flex" key={instruction}>
             <div className="px-5">#</div>
             <div>{instruction}</div>
           </div>

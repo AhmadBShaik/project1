@@ -59,7 +59,8 @@ function AgentTemplateUpdationForm({
       purpose: purpose,
       instructions: instructions,
     });
-  }, []);
+  }, [name, purpose, instructions]);
+
   const submitData = async (data: AgentTemplateFormData) => {
     if (!errors.name && !errors.purpose) {
       setLoading(true);
@@ -95,9 +96,7 @@ function AgentTemplateUpdationForm({
       </legend>
       <div className="w-full max-w-3xl space-y-3">
         <label className="flex flex-col sm:flex-row">
-          <div className="sm:w-1/3 font-medium">
-            Name
-          </div>
+          <div className="sm:w-1/3 font-medium">Name</div>
           <div className="w-full sm:w-2/3">
             <input
               {...register("name")}
@@ -114,9 +113,7 @@ function AgentTemplateUpdationForm({
           </div>
         </label>
         <label className="flex flex-col sm:flex-row">
-          <div className="sm:w-1/3 font-medium">
-            Purpose
-          </div>
+          <div className="sm:w-1/3 font-medium">Purpose</div>
           <div className="w-full sm:w-2/3">
             <input
               {...register("purpose")}
@@ -137,9 +134,7 @@ function AgentTemplateUpdationForm({
         </label>
       </div>
       <label className="block pt-5">
-        <span className="block font-medium">
-          Instructions
-        </span>
+        <span className="block font-medium">Instructions</span>
         <span className="block text-xs md:text-sm xl:text-md font-medium mb-2">
           {`Create instruction templates for your subscribers - placeholder text with in curly braces "{", "}"`}
         </span>
