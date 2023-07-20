@@ -31,7 +31,7 @@ function AgentSidebar({
           {agents?.map((agent) => (
             <li
               key={agent.id}
-              className="bg-neutral-900 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer"
+              className="bg-neutral-900 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer hover:bg-neutral-800"
               onClick={() => router.push(`/agents/${agent.id}`)}
             >
               <div>{agent.agent_template?.name}</div>
@@ -44,7 +44,7 @@ function AgentSidebar({
           No agents yet!
         </div>
       )}
-      <div className="bg-green-500 text-white w-full px-1.5 py-1 sm:px-2 sm:py-1.5 sm:text-md rounded font-bold text-center cursor-pointer" onClick={() => {
+      <div className="bg-green-500 hover:bg-green-600 text-white w-full px-1.5 py-1 sm:px-2 sm:py-1.5 sm:text-md rounded font-bold text-center cursor-pointer" onClick={() => {
         router.push('/explore')
       }}>
         Create an agent

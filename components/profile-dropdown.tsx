@@ -125,7 +125,7 @@ export function ProfileDropdown({
                         }
                   }
                 >
-                  Agents
+                 {!isAdmin? "Agents" :"Agent templates"}
                 </div>
               )}
             </Menu.Item>

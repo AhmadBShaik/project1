@@ -21,11 +21,11 @@ function AgentTemplateCard({
   const router = useRouter();
   return (
     <div
-      className="bg-neutral-800 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer"
+      className="bg-neutral-900 hover:bg-neutral-800 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer text-green-500"
       onClick={() => {
         isAdmin
           ? router.push(`/agent-templates/${agentTemplate.id}`)
-          : router.push(`/agents/create/${agentTemplate.id}`);
+          : router.push(`/explore/view/${agentTemplate.id}`);
       }}
     >
       <div

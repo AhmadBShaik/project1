@@ -29,7 +29,7 @@ function AgentList() {
   return (
     <>
       <div className="flex-1">
-        <div className="flex-1">
+        <div className="flex-1 text-green-500">
           <div className="flex justify-between items-center mt-2.5 mb-5">
             <div className="text-green-500 text-md sm:text-xl font-bold">
               Agents
@@ -47,7 +47,7 @@ function AgentList() {
           </div>
           <ul className="space-y-5">
             {agents?.map((agent) => (
-              <li key={agent.id} className="bg-neutral-800 p-5 rounded">
+              <li key={agent.id} className="bg-neutral-900 hover:bg-neutral-800 p-5 rounded">
                 <div className="mb-2">
                   <div className="text-xl ">{agent.agent_template?.name}</div>
                   <div className="">{agent.agent_template?.purpose}</div>
