@@ -2,42 +2,46 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-function AgentCard({
-  agent,
+function AgentTemplateCard({
+  agentTemplate,
   smallTextOnXl,
-  agentInstance,
+  userId,
   isAdmin,
 }: {
-  agent: {
+  agentTemplate: {
     id: string;
     name: string;
     purpose: string;
     instructions: string[];
   };
-  agentInstance:{}
-  smallTextOnXl?: boolean;
+  userId?: string;
   isAdmin?: boolean;
+  smallTextOnXl?: boolean;
 }) {
   const router = useRouter();
   return (
     <div
       className="bg-neutral-800 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer"
-      onClick={() => {}}
+      onClick={() => {
+        isAdmin
+          ? router.push(`/agent-templates/${agentTemplate.id}`)
+          : router.push(`/agents/create/${agentTemplate.id}`);
+      }}
     >
       <div
         className={`font-bold text-md sm:text-xl ${
           smallTextOnXl ? "xl:text-sm" : ""
         }`}
       >
-        {agent?.name}
+        {agentTemplate?.name}
       </div>
       <div
         className={`text-md sm:text-xl ${smallTextOnXl ? "xl:text-sm" : ""}`}
       >
-        {agent?.purpose}
+        {agentTemplate?.purpose}
       </div>
     </div>
   );
 }
 
-export default AgentCard;
+export default AgentTemplateCard;

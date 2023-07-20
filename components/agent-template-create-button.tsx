@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import AgentCard from "./agent-card";
+import AgentTemplateCard from "./agent-template-card";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
 import useSWR from "swr";
@@ -8,13 +8,13 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const agentFormData = z.object({
+const agentTemplateFormData = z.object({
   name: z.string().min(3),
   purpose: z.string().min(10),
   instructions: z.string().optional().array(),
 });
 
-type AgentFormData = z.infer<typeof agentFormData>;
+type AgentTemplateFormData = z.infer<typeof agentTemplateFormData>;
 
 function AgentCreationForm({
   setShowForm,
@@ -46,14 +46,14 @@ function AgentCreationForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AgentFormData>({
-    resolver: zodResolver(agentFormData),
+  } = useForm<AgentTemplateFormData>({
+    resolver: zodResolver(agentTemplateFormData),
   });
 
-  const submitData = async (data: AgentFormData) => {
+  const submitData = async (data: AgentTemplateFormData) => {
     if (!errors.name && !errors.purpose) {
       setLoading(true);
-      const insertResponse = await supabase.from("agent").insert({
+      const insertResponse = await supabase.from("agent_template").insert({
         name,
         purpose,
         instructions,
@@ -209,8 +209,8 @@ function CreateAgent() {
   const [instructions, setInstructions] = useState<string[]>([""]);
 
   const supabase = createClientComponentClient<Database>();
-  const { data: agents } = useSWR(`/agents/`, async () => {
-    const response = await supabase.from("agent").select();
+  const { data: agentTemplates } = useSWR(`/agents/`, async () => {
+    const response = await supabase.from("agent_template").select();
     return response.data;
   });
   return (
@@ -246,8 +246,10 @@ function CreateAgent() {
               </div>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {agents?.map((agent) => (
-                <li key={agent.id}>{<AgentCard agent={agent} isAdmin />}</li>
+              {agentTemplates?.map((agentTemplate) => (
+                <li key={agentTemplate.id}>
+                  {<AgentTemplateCard agentTemplate={agentTemplate} isAdmin />}
+                </li>
               ))}
             </ul>
           </div>

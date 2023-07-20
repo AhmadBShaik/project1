@@ -1,4 +1,3 @@
-// import AgentCard from "@/components/agent-template-card";
 import SidebarCreateAgent from "@/components/agent-template-sidebar";
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";

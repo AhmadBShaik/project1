@@ -1,5 +1,5 @@
-import AgentsList from "@/components/agent-list";
-import AgentTemplatesList from "@/components/agent-templates-list";
+import AgentInstances from "@/components/agent-instances";
+import CreateAgent from "@/components/create-agent-template";
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -12,7 +12,7 @@ async function Agents() {
   console.log("profile", profile);
   return (
     <section className="flex-1 w-full p-5 xl:px-0 flex flex-col">
-      <AgentsList />
+      {profile?.is_admin ? <CreateAgent /> :<AgentInstances/>}
     </section>
   );
 }

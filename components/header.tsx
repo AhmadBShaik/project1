@@ -44,6 +44,7 @@ async function Header() {
                 <div className="flex items-center">
                   <ProfileDropdown
                     name={profile?.name!}
+                    isAdmin={profile?.is_admin!}
                     email={session.user.email!}
                     imageUrl={undefined}
                     postfix={

@@ -11,6 +11,43 @@ export interface Database {
     Tables: {
       agent: {
         Row: {
+          agent_template_id: string
+          created_at: string | null
+          id: string
+          meta: Json[]
+          user_id: string
+        }
+        Insert: {
+          agent_template_id: string
+          created_at?: string | null
+          id?: string
+          meta?: Json[]
+          user_id: string
+        }
+        Update: {
+          agent_template_id?: string
+          created_at?: string | null
+          id?: string
+          meta?: Json[]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_agent_template_id_fkey"
+            columns: ["agent_template_id"]
+            referencedRelation: "agent_template"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      agent_template: {
+        Row: {
           created_at: string | null
           id: string
           instructions: string[]
@@ -36,44 +73,7 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "agent_user_id_fkey"
-            columns: ["user_id"]
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      agent_instance: {
-        Row: {
-          agent_id: string
-          created_at: string | null
-          id: string
-          meta: Json[]
-          user_id: string
-        }
-        Insert: {
-          agent_id: string
-          created_at?: string | null
-          id?: string
-          meta?: Json[]
-          user_id: string
-        }
-        Update: {
-          agent_id?: string
-          created_at?: string | null
-          id?: string
-          meta?: Json[]
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "agent_instance_agent_id_fkey"
-            columns: ["agent_id"]
-            referencedRelation: "agent"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "agent_instance_user_id_fkey"
+            foreignKeyName: "agent_template_user_id_fkey"
             columns: ["user_id"]
             referencedRelation: "users"
             referencedColumns: ["id"]

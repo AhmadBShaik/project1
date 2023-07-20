@@ -9,11 +9,13 @@ import { ReactNode } from "react";
 export function ProfileDropdown({
   name,
   email,
+  isAdmin,
   imageUrl,
   postfix,
 }: {
   name: string;
   email: string;
+  isAdmin: boolean;
   imageUrl?: string;
   postfix?: ReactNode;
 }) {
@@ -110,10 +112,16 @@ export function ProfileDropdown({
                     active && "bg-green-500 text-white rounded"
                   } cursor-pointer px-2.5 py-1`}
                   onClick={
-                    pathname === "/agents"
+                    !isAdmin
+                      ? pathname === "/agents"
+                        ? undefined
+                        : async () => {
+                            router.push("/agents");
+                          }
+                      : pathname === "/agent-templates"
                       ? undefined
                       : async () => {
-                          router.push("/agents");
+                          router.push("/agent-templates");
                         }
                   }
                 >

@@ -1,4 +1,4 @@
-import AgentDetail from "@/components/agent-detail";
+import AgentDetail from "@/components/agent-template-detail";
 import CreateAgentInstance from "@/components/create-agent-instance";
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -17,7 +17,7 @@ async function Agents({ params }: { params: { id: string } }) {
   }
 
   const agentResponse = await supabase
-    .from("agent")
+    .from("agent_template")
     .select()
     .match({ id: params.id });
 
