@@ -18,9 +18,8 @@ export default async function AgentsLayout({
     .from("agent_template")
     .select()
     .match({ user_id: user?.id });
-  const { data: profiles } = await supabase.from("profile").select();
-  const profile = profiles?.[0];
-  if (!profile?.is_admin) {
+
+  if (!user?.user_metadata.is_admin) {
     redirect("/");
   }
   return (

@@ -2,7 +2,6 @@ import AgentSidebar from "@/components/agent-sidebar";
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export default async function AgentsLayout({
   children,
@@ -10,20 +9,13 @@ export default async function AgentsLayout({
   children: React.ReactNode;
 }) {
   const supabase = createServerComponentClient<Database>({ cookies });
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   const agentsResponse = await supabase
     .from("agent")
     .select(`*, agent_template (*)`);
 
   console.log("agentsResponse", agentsResponse);
-  const { data: profiles } = await supabase.from("profile").select();
-  const profile = profiles?.[0];
-  if(profile?.is_admin){
-    redirect('/')
-  }
+
   return (
     <section className="flex-1 w-full flex flex-col">
       <div className="flex-1 flex w-full">

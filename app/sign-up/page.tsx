@@ -11,6 +11,7 @@ import { Database } from "@/lib/database.types";
 const signUpFormData = z
   .object({
     name: z.string().min(3).max(20),
+    is_admin: z.boolean(),
     email: z.string().email(),
     password: z.string().min(6).max(20),
     confirmPassword: z.string().min(6).max(20),
@@ -38,19 +39,20 @@ export default function SignUp() {
 
   const submitData = async (data: SignUpFormData) => {
     setLoading(true);
+    // console.log(data)
     const signUpResponse = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
       options: {
         emailRedirectTo: `${location.origin}/auth/callback`,
+        data: {
+          name: data.name,
+          is_admin: data.is_admin,
+        }
       },
     });
 
     if (!signUpResponse.error) {
-      // console.log("signUpResponse", signUpResponse.data.user);
-      // await supabase
-      //   .from("profile")
-      //   .insert({ name: data.name, user_id: signUpResponse.data.user?.id! });
       setInfo(
         <div
           className={
@@ -173,6 +175,14 @@ export default function SignUp() {
                   {errors.confirmPassword.message}
                 </span>
               ) : null}
+            </label>
+
+            <label className="flex space-x-2">
+              <input type="checkbox" {...register("is_admin")} 
+              className="bg-neutral-600 text-neutral-100"/>
+              <span className=" font-medium text-neutral-200 ">
+                Sign up as admin
+              </span>
             </label>
             <div className="pt-5">
               <input

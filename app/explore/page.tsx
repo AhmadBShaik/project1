@@ -5,8 +5,14 @@ import { cookies } from "next/headers";
 
 export default async function Home() {
   const supabase = createServerComponentClient<Database>({ cookies });
-  const { data: profiles } = await supabase.from("profile").select();
-  const profile = profiles?.[0];
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return <AgentTemplatesList isAdmin={profile?.is_admin!} userId={profile?.user_id!} />;
+  return (
+    <AgentTemplatesList
+      isAdmin={user?.user_metadata?.is_admin!}
+      userId={user?.id!}
+    />
+  );
 }

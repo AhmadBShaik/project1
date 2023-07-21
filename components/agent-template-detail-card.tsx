@@ -5,7 +5,9 @@ import React from "react";
 function AgentTemplateDetailCard({
   agentTemplate,
   isCreator,
+  isAdmin,
 }: {
+  isAdmin: boolean;
   isCreator: boolean;
   agentTemplate: {
     created_at: string | null;
@@ -43,14 +45,20 @@ function AgentTemplateDetailCard({
             Edit
           </button>
         ) : (
-          <button
-            className="bg-green-500 text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold"
-            onClick={() => {
-              router.push(`/agents/create/${agentTemplate.id}`);
-            }}
-          >
-            Create Agent
-          </button>
+          <>
+            {!isAdmin ? (
+              <>
+                <button
+                  className="bg-green-500 text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold"
+                  onClick={() => {
+                    router.push(`/agents/create/${agentTemplate.id}`);
+                  }}
+                >
+                  Create Agent
+                </button>
+              </>
+            ) : null}
+          </>
         )}
       </div>
     </div>

@@ -18,6 +18,7 @@ export default async function View({ params }: { params: { id: string } }) {
     <AgentTemplateDetailCard
       agentTemplate={agentTemplates?.[0]!}
       isCreator={agentTemplates?.[0]?.user_id === user?.id!}
+      isAdmin={user?.user_metadata.is_admin}
     />
   );
 }

@@ -9,10 +9,9 @@ import NavigationMenu from "./navigation-menu";
 async function Header() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  const { data: profiles } = await supabase.from("profile").select();
-  const profile = profiles?.[0];
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <>
       <header className="fixed w-full h-16 sm:h-20 text-green-500">
@@ -23,7 +22,7 @@ async function Header() {
               <div className="font-bold text-2xl sm:text-3xl cursor-default">
                 Project 1
               </div>
-              {!session ? (
+              {!user ? (
                 <div className="space-x-5 text-xs hidden sm:block">
                   <>
                     <Link
@@ -43,9 +42,9 @@ async function Header() {
               ) : (
                 <div className="flex items-center">
                   <ProfileDropdown
-                    name={profile?.name!}
-                    isAdmin={profile?.is_admin!}
-                    email={session.user.email!}
+                    name={user.user_metadata.name}
+                    isAdmin={user.user_metadata.is_admin!}
+                    email={user.email!}
                     imageUrl={undefined}
                     postfix={
                       <div className="sm:hidden text-gray-500 cursor-pointer">

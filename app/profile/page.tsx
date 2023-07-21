@@ -12,14 +12,12 @@ export const metadata = {
 export default async function Profile() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     redirect("/sign-in");
   }
-  const { data: profiles } = await supabase.from("profile").select();
-  const profile = profiles?.[0];
 
   return (
     <section className="flex-1 px-5 xl:px-0 mt-5">
@@ -33,8 +31,10 @@ export default async function Profile() {
             alt="Profile Avatar"
           />
         </div>
-        <div className="text-xl text-green-500 font-bold">{profile?.name}</div>
-        <div className="text-lg text-green-500"> {session.user.email}</div>
+        <div className="text-xl text-green-500 font-bold">
+          {user.user_metadata.name}
+        </div>
+        <div className="text-lg text-green-500"> {user.email}</div>
       </div>
       <div className="p-5 rounded-2xl border border-neutral-600 bg-neutral-800 shadow-md hidden sm:flex items-center space-x-5 max-w-md">
         <div className="">
@@ -48,9 +48,9 @@ export default async function Profile() {
         </div>
         <div>
           <div className="text-xl text-green-500 font-bold">
-            {profile?.name}
+            {user.user_metadata.name}
           </div>
-          <div className="text-lg text-green-500"> {session.user.email}</div>
+          <div className="text-lg text-green-500"> {user.email}</div>
         </div>
       </div>
     </section>
