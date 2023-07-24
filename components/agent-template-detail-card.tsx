@@ -20,7 +20,7 @@ function AgentTemplateDetailCard({
 }) {
   const router = useRouter();
   return (
-    <div className="bg-neutral-900 hover:bg-neutral-800 p-5 rounded text-green-500">
+    <div className="bg-neutral-800 hover:bg-neutral-800 p-5 rounded text-green-500">
       <div className="mb-2">
         <div className="text-xl ">{agentTemplate.name}</div>
         <div className="">{agentTemplate.purpose}</div>

@@ -88,7 +88,7 @@ function AgentTemplateCreationForm({
               onChange={(e) => {
                 setName(e.target.value);
               }}
-              className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-900"
+              className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-800"
               placeholder="Agent name"
             />
             {errors.name ? (
@@ -107,7 +107,7 @@ function AgentTemplateCreationForm({
               onChange={(e) => {
                 setPurpose(e.target.value);
               }}
-              className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-900"
+              className="w-full outline-0 px-2 py-0.5 rounded bg-neutral-800"
               type="text"
               placeholder="Purpose"
             />
@@ -130,13 +130,13 @@ function AgentTemplateCreationForm({
           {(!!instructions.length ? instructions : [""]).map(
             (instruction, index) => (
               <div key={`instruction-${index}`}>
-                <div className="flex w-full  bg-neutral-900 rounded px-2 space-x-2">
+                <div className="flex w-full  bg-neutral-800 rounded px-2 space-x-2">
                   <div className="text-green-500 text-xl">#</div>
                   <div className="flex-1">
                     <input
                       {...register(`instructions.${index}`)}
                       value={instruction}
-                      className="w-full outline-0 px-2.5 py-0.5 bg-neutral-900 focus:border-b border-green-500"
+                      className="w-full outline-0 px-2.5 py-0.5 bg-neutral-800 focus:border-b border-green-500"
                       onChange={(e) => {
                         setInstructions(
                           instructions.map((ins, i) =>

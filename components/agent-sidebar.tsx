@@ -31,7 +31,7 @@ function AgentSidebar({
           {agents?.map((agent) => (
             <li
               key={agent.id}
-              className="bg-neutral-900 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer hover:bg-neutral-800"
+              className="bg-neutral-800 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer hover:bg-neutral-800"
               onClick={() => router.push(`/agents/${agent.id}`)}
             >
               <div>{agent.agent_template?.name}</div>
@@ -40,7 +40,7 @@ function AgentSidebar({
           ))}
         </>
       ) : (
-        <div className="bg-neutral-900 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer">
+        <div className="bg-neutral-800 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer">
           No agents yet!
         </div>
       )}

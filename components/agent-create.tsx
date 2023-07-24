@@ -66,7 +66,7 @@ function CreateAgent({
                   <input
                     type="text"
                     placeholder={placeholder.name}
-                    className="w-2/3 outline-0 px-2 py-0.5 rounded bg-neutral-900"
+                    className="w-2/3 outline-0 px-2 py-0.5 rounded bg-neutral-800"
                     onChange={(e) => {
                       setAllUniquePlaceholders(
                         [

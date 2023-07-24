@@ -49,7 +49,7 @@ function AgentList() {
             {agents?.map((agent) => (
               <li
                 key={agent.id}
-                className="bg-neutral-900 hover:bg-neutral-800 p-5 rounded"
+                className="bg-neutral-800 hover:bg-neutral-800 p-5 rounded"
               >
                 <div className="mb-2">
                   <div className="text-xl ">{agent.agent_template?.name}</div>

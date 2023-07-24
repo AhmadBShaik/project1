@@ -22,7 +22,7 @@ function AgentTemplateSidebar({
           {agentTemplates?.map((agentTemplate) => (
             <li
               key={agentTemplate.id}
-              className="bg-neutral-900 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer hover:bg-neutral-800"
+              className="bg-neutral-800 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer hover:bg-neutral-800"
               onClick={() => router.push(`/agent-templates/${agentTemplate.id}`)}
             >
               <div>{agentTemplate.name}</div>
@@ -31,12 +31,12 @@ function AgentTemplateSidebar({
           ))}
         </>
       ) : (
-        <div className="bg-neutral-900 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer">
+        <div className="bg-neutral-800 text-green-500 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer">
           No agents yet!
         </div>
       )}
       <div
-        className="bg-green-500 bg-green-600 text-white w-full px-1.5 py-1 sm:px-2 sm:py-1.5 sm:text-md rounded font-bold text-center cursor-pointer"
+        className="bg-green-500 hover:bg-green-600 text-white w-full px-1.5 py-1 sm:px-2 sm:py-1.5 sm:text-md rounded font-bold text-center cursor-pointer"
         onClick={() => {
           router.push("/agent-templates/create");
         }}
