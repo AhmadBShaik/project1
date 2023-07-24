@@ -12,7 +12,7 @@ function AgentTemplateCard({
     id: string;
     name: string;
     purpose: string;
-    user_id: string;
+    user_id: string | null;
     instructions: string[];
   };
   userId?: string;
