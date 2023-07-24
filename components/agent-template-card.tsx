@@ -12,6 +12,7 @@ function AgentTemplateCard({
     id: string;
     name: string;
     purpose: string;
+    user_id: string;
     instructions: string[];
   };
   userId?: string;
@@ -23,9 +24,11 @@ function AgentTemplateCard({
     <div
       className="bg-neutral-800 hover:bg-neutral-800 p-3.5 sm:p-5 xl:px-2.5 xl:py-2 rounded-lg cursor-pointer text-green-500"
       onClick={() => {
-        isAdmin
-          ? router.push(`/agent-templates/${agentTemplate.id}`)
-          : router.push(`/explore/view/${agentTemplate.id}`);
+        if (userId === agentTemplate.user_id) {
+          router.push(`/agent-templates/${agentTemplate.id}`);
+        } else {
+          router.push(`/explore/view/${agentTemplate.id}`);
+        }
       }}
     >
       <div

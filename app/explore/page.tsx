@@ -11,6 +11,7 @@ export default async function Home() {
 
   return (
     <AgentTemplatesList
+      showAll
       isAdmin={user?.user_metadata?.is_admin!}
       userId={user?.id!}
     />

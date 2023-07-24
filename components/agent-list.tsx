@@ -6,7 +6,7 @@ import { Database } from "@/lib/database.types";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 
-function AgentList() {
+function AgentList({ userId }: { userId: string }) {
   const supabase = createClientComponentClient<Database>();
   const { data: agents, mutate } = useSWR(`/agents/`, async () => {
     const response = await supabase
@@ -45,59 +45,79 @@ function AgentList() {
               </button>
             </div>
           </div>
-          <ul className="space-y-5">
-            {agents?.map((agent) => (
-              <li
-                key={agent.id}
-                className="bg-neutral-800 hover:bg-neutral-800 p-5 rounded"
-              >
-                <div className="mb-2">
-                  <div className="text-xl ">{agent.agent_template?.name}</div>
-                  <div className="">{agent.agent_template?.purpose}</div>
-                </div>
-                <ul>
-                  {agent.agent_template?.instructions.map((i) => (
-                    <div key={i}>
-                      {updatedInstruction(
-                        i,
-                        agent.meta as { name: string; value: string }[]
-                      )}
-                    </div>
-                  ))}
-                </ul>
+          <>
+            {agents?.filter((agent) => agent.user_id === userId).length ? (
+              <ul className="space-y-5">
+                {agents
+                  ?.filter((agent) => agent.user_id === userId)
+                  ?.map((agent) => (
+                    <li
+                      key={agent.id}
+                      className="bg-neutral-800 hover:bg-neutral-800 p-5 rounded"
+                    >
+                      <div className="mb-2">
+                        <div className="text-xl ">
+                          {agent.agent_template?.name}
+                        </div>
+                        <div className="">{agent.agent_template?.purpose}</div>
+                      </div>
+                      <ul>
+                        {agent.agent_template?.instructions.map((i) => (
+                          <div key={i}>
+                            {updatedInstruction(
+                              i,
+                              agent.meta as { name: string; value: string }[]
+                            )}
+                          </div>
+                        ))}
+                      </ul>
 
-                <div className="flex justify-end space-x-5">
-                  <button
-                    className="bg-red-500 text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold"
-                    onClick={async () => {
-                      const deleteResponse = await supabase
-                        .from("agent")
-                        .delete()
-                        .eq("id", agent.id);
-                      if (!deleteResponse.error) {
-                        mutate();
-                      } else {
-                        console.log(
-                          "Error while adding agent",
-                          deleteResponse.error
-                        );
-                      }              
-                    }}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="bg-green-500 text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold"
-                    onClick={() => {
-                      router.push(`/agents/${agent.id}`);
-                    }}
-                  >
-                    Edit
-                  </button>
+                      <div className="flex justify-end space-x-5">
+                        <button
+                          className="bg-red-500 text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold"
+                          onClick={async () => {
+                            const deleteResponse = await supabase
+                              .from("agent")
+                              .delete()
+                              .eq("id", agent.id);
+                            if (!deleteResponse.error) {
+                              mutate();
+                            } else {
+                              console.log(
+                                "Error while adding agent",
+                                deleteResponse.error
+                              );
+                            }
+                          }}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="bg-green-500 text-white px-1.5 py-1 text-sm md:text-md sm:px-3 sm:py-1.5 sm:text-md rounded cursor-pointer font-bold"
+                          onClick={() => {
+                            router.push(`/agents/${agent.id}`);
+                          }}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <div className=" rounded bg-neutral-800 p-5 flex flex-col items-center">
+                <div className="text-xl font-bold mb-5">No Agents yet</div>
+                <div
+                  className="bg-green-500 hover:bg-green-600 text-white w-48 px-1.5 py-1 sm:px-2 sm:py-1.5 sm:text-md rounded font-bold text-center cursor-pointer"
+                  onClick={() => {
+                    router.push("/explore");
+                  }}
+                >
+                  Create an agent
                 </div>
-              </li>
-            ))}
-          </ul>
+              </div>
+            )}
+          </>
         </div>
       </div>
     </>
