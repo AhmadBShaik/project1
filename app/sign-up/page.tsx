@@ -44,7 +44,7 @@ export default function SignUp() {
       email: data.email,
       password: data.password,
       options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
+        emailRedirectTo: `${location.origin}/api/auth/callback`,
         data: {
           name: data.name,
           is_admin: data.is_admin,
