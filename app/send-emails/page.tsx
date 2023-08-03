@@ -1,10 +1,8 @@
 "use client";
 import React from "react";
-import { z } from "zod";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { initializeAgentExecutorWithOptions } from "langchain/agents";
 import Email from "@/tools/email";
-import { DynamicStructuredTool } from "langchain/tools";
 
 const EmailsPage = () => {
   console.log("Emails page");
@@ -34,8 +32,11 @@ const EmailsPage = () => {
           const input = `
           name: Ahmad
           to: ahmad.shaik9912@gmail.com
-          subject: Hello
-          html: <h1>Hi</h1>
+          subject: Testing Email tool
+          html: 
+          <div>
+            <p>Hi Ahmad</p>
+          </div>
 
           send an email to this email
           `;
