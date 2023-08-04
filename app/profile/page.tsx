@@ -1,8 +1,6 @@
-import { Database } from "@/lib/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { createServerSupabaseClient } from "@/clients/supabase-server-client";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Project 1",
@@ -10,7 +8,7 @@ export const metadata = {
 };
 
 export default async function Profile() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSupabaseClient()
   const {
     data: { user },
   } = await supabase.auth.getUser();

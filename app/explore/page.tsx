@@ -1,10 +1,8 @@
+import { createServerSupabaseClient } from "@/clients/supabase-server-client";
 import AgentTemplatesList from "@/components/agent-templates-list";
-import { Database } from "@/lib/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
 export default async function Home() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSupabaseClient()
   const {
     data: { user },
   } = await supabase.auth.getUser();

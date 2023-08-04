@@ -1,11 +1,9 @@
-import UpdateAgent from "@/components/agent-update";
-import { Database } from "@/lib/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import React from "react";
+import UpdateAgent from "@/components/agent-update";
+import { createServerSupabaseClient } from "@/clients/supabase-server-client";
 
 async function CreateAgentTemplate({ params }: { params: { id: string } }) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSupabaseClient()
 
   return (
     <section className="flex-1 w-full p-5 xl:px-0 flex flex-col">

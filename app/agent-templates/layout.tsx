@@ -1,7 +1,5 @@
+import { createServerSupabaseClient } from "@/clients/supabase-server-client";
 import AgentTemplateSidebar from "@/components/agent-template-sidebar";
-import { Database } from "@/lib/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function AgentsLayout({
@@ -9,7 +7,7 @@ export default async function AgentsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSupabaseClient()
   const {
     data: { user },
   } = await supabase.auth.getUser();

@@ -1,12 +1,11 @@
 "use client";
-import { ReactNode, useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/clients/supabase";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
+import { ReactNode, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const signInFormData = z.object({
   email: z.string().email(),
@@ -131,9 +130,8 @@ export default function SignIn() {
                 disabled={loading}
                 type="submit"
                 value={"Sign In"}
-                className={`w-full font-bold ${
-                  loading ? "bg-green-300" : "bg-green-500"
-                } text-neutral-100 py-2 rounded cursor-pointer`}
+                className={`w-full font-bold ${loading ? "bg-green-300" : "bg-green-500"
+                  } text-neutral-100 py-2 rounded cursor-pointer`}
               />
             </div>
           </form>

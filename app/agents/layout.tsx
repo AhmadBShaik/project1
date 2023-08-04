@@ -1,14 +1,12 @@
+import { createServerSupabaseClient } from "@/clients/supabase-server-client";
 import AgentSidebar from "@/components/agent-sidebar";
-import { Database } from "@/lib/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
 export default async function AgentsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSupabaseClient()
 
   const agentsResponse = await supabase
     .from("agent")
@@ -24,22 +22,22 @@ export default async function AgentsLayout({
             <AgentSidebar
               agents={
                 agentsResponse.data as
-                  | {
-                      agent_template_id: string;
-                      created_at: string | null;
-                      id: string;
-                      meta: { name: string; value: string }[];
-                      user_id: string;
-                      agent_template: {
-                        created_at: string | null;
-                        id: string;
-                        instructions: string[];
-                        name: string;
-                        purpose: string;
-                        user_id: string | null;
-                      } | null;
-                    }[]
-                  | null
+                | {
+                  agent_template_id: string;
+                  created_at: string | null;
+                  id: string;
+                  meta: { name: string; value: string }[];
+                  user_id: string;
+                  agent_template: {
+                    created_at: string | null;
+                    id: string;
+                    instructions: string[];
+                    name: string;
+                    purpose: string;
+                    user_id: string | null;
+                  } | null;
+                }[]
+                | null
               }
             />
           </div>

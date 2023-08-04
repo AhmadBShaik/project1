@@ -1,13 +1,10 @@
-import { Database } from "@/lib/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerSupabaseClient } from "@/clients/supabase-server-client";
 import Link from "next/link";
-import React from "react";
-import { ProfileDropdown } from "./profile-dropdown";
 import NavigationMenu from "./navigation-menu";
+import { ProfileDropdown } from "./profile-dropdown";
 
 async function Header() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerSupabaseClient()
   const {
     data: { user },
   } = await supabase.auth.getUser();
