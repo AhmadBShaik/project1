@@ -13,7 +13,7 @@ interface IDynamicStructuredTool<
 }
 
 type DynamicStructuredToolProps = {
-  type: "email";
+  type: "email" | "read-file";
   data: Pick<
     IDynamicStructuredTool,
     "name" | "description" | "schema" | "func" | "returnDirect"
@@ -25,6 +25,16 @@ class ToolFactory {
     let toolInstance: any;
     switch (toolData.type) {
       case "email": {
+        toolInstance = new DynamicStructuredTool({
+          name: toolData.data.name,
+          description: toolData.data.description,
+          schema: toolData.data.schema,
+          func: toolData.data.func,
+          returnDirect: toolData.data.returnDirect, // This is an option that allows the tool to return the output directly
+        });
+        return toolInstance;
+      }
+      case "read-file": {
         toolInstance = new DynamicStructuredTool({
           name: toolData.data.name,
           description: toolData.data.description,

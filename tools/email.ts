@@ -2,7 +2,7 @@ import axios from "axios";
 import { z } from "zod";
 import toolFactory from "./tool-factory";
 
-const Email = toolFactory.createTool({
+export const Email = toolFactory.createTool({
   type: "email",
   data: {
     name: "email",
@@ -29,5 +29,3 @@ const Email = toolFactory.createTool({
     returnDirect: false,
   },
 });
-
-export default Email;
