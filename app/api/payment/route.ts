@@ -24,14 +24,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         quantity,
       },
     ],
-    mode: "subscription",
+    mode: "payment",
     allow_promotion_codes: true,
-    subscription_data: {
-      trial_from_plan: true,
-      metadata,
-    },
     success_url: `${getURL()}/`,
-    cancel_url: `${getURL()}/`,
+    cancel_url: `${getURL()}/pricing`,
   });
 
   return NextResponse.json(

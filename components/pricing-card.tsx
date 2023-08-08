@@ -49,7 +49,7 @@ function PricingCard({
         <span className="text-2xl  sm:text-3xl">
           {
             currencySymbols[
-              price.currency.toUpperCase() as keyof typeof currencySymbols
+            price.currency.toUpperCase() as keyof typeof currencySymbols
             ]
           }
           {price?.unit_amount! / 100}
@@ -58,9 +58,8 @@ function PricingCard({
       </div>
       <button
         disabled={loading}
-        className={`${
-          loading ? "bg-green-300" : "bg-green-400 hover:bg-green-500"
-        } text-neutral-100 p-1.5 font-bold w-full text-md sm:text-lg text-center rounded`}
+        className={`${loading ? "bg-green-300" : "bg-green-400 hover:bg-green-500"
+          } text-neutral-100 p-1.5 font-bold w-full text-md sm:text-lg text-center rounded`}
         onClick={handleSubscription}
       >
         Subscribe

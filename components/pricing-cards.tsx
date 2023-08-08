@@ -23,7 +23,7 @@ function PricingCards({
   return (
     <>
       {!prices ? (
-        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <ul className="grid grid-cols-1  sm:grid-cols-2  lg:grid-cols-3 gap-5">
           {Array.from({ length: 3 }, (v, i) => i).map((i) => (
             <li key={i}>
               <div className="border bg-neutral-800 border-neutral-600 rounded-lg p-5 cursor-pointer shadow-lg hover:shadow-xl">
@@ -41,9 +41,9 @@ function PricingCards({
           ))}
         </ul>
       ) : (
-        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <ul className="grid grid-cols-1  sm:grid-cols-2  lg:grid-cols-3 gap-5">
           {prices
-            ?.filter((price) => price.recurring?.interval === planInterval)
+            ?.filter((price) => price.type === 'one_time')
             ?.map((price) => (
               <li key={price.id}>
                 <PricingCard price={price} planInterval={planInterval} />
