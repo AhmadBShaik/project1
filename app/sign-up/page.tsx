@@ -178,8 +178,8 @@ export default function SignUp() {
             </label>
 
             <label className="flex space-x-2">
-              <input type="checkbox" {...register("is_admin")} 
-              className="bg-neutral-600 text-neutral-100"/>
+              <input type="checkbox" {...register("is_admin")}
+                className="bg-neutral-600 text-neutral-100" />
               <span className=" font-medium text-neutral-200 ">
                 Sign up as admin
               </span>
@@ -189,9 +189,8 @@ export default function SignUp() {
                 disabled={loading}
                 type="submit"
                 value={"Sign Up"}
-                className={`w-full font-bold ${
-                  loading ? "bg-green-300" : "bg-green-500"
-                } text-neutral-100 py-2 rounded cursor-pointer`}
+                className={`w-full font-bold ${loading ? "bg-green-300" : "bg-green-500"
+                  } text-neutral-100 py-2 rounded cursor-pointer`}
               />
             </div>
           </form>

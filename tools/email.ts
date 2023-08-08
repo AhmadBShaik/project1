@@ -1,6 +1,14 @@
-import axios from "axios";
 import { z } from "zod";
 import toolFactory from "./tool-factory";
+import nodemailer from "nodemailer";
+
+const config = {
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_ADDRESS,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+};
 
 export const Email = toolFactory.createTool({
   type: "email",
@@ -15,13 +23,17 @@ export const Email = toolFactory.createTool({
     }),
     func: async ({ name, to, subject, html }) => {
       try {
-        await axios.post(`/api/send-email`, {
-          name,
+        const transporter = nodemailer.createTransport(config);
+        let message = {
+          from: process.env.EMAIL_ADDRESS,
           to,
           subject,
           html,
-        });
-        return `Email sent to ${name.toString()}`;
+        };
+
+        const transporterResponse = await transporter.sendMail(message);
+        console.log("Transporter Response -> ", transporterResponse);
+        return `Email sent to ${transporterResponse.accepted.join(", ")}`;
       } catch (e) {
         return `Error while sending email to ${name.toString()}: ${e}`;
       }

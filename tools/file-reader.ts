@@ -13,7 +13,7 @@ export const FileReader = toolFactory.createTool({
         `https://frrjcinuograjbttwspj.supabase.co/storage/v1/object/public/agents/query-results/${filename}`
       );
 
-      return JSON.stringify(fileContent);
+      return fileContent.data;
     },
     returnDirect: false,
   },

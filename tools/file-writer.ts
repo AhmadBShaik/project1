@@ -1,9 +1,7 @@
 import { z } from "zod";
 import toolFactory from "./tool-factory";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/database.types";
+import { createServerSupabaseClient } from "@/clients/supabase-server-client";
 
-const supabase = createClientComponentClient<Database>();
 export const FileWriter = toolFactory.createTool({
   type: "read-file",
   data: {
@@ -14,6 +12,7 @@ export const FileWriter = toolFactory.createTool({
       fileContent: z.string(),
     }),
     func: async ({ filename, fileContent }) => {
+      const supabase = createServerSupabaseClient();
       const { data, error } = await supabase.storage
         .from("agents")
         .upload(`query-results/${filename}`, fileContent);
