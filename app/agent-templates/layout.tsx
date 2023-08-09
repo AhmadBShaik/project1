@@ -12,10 +12,10 @@ export default async function AgentsLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
-  const agentsResponse = await supabase
-    .from("agent_template")
-    .select()
-    .match({ user_id: user?.id });
+  // const agentsResponse = await supabase
+  //   .from("agent_template")
+  //   .select()
+  //   .match({ user_id: user?.id });
 
   if (!user?.user_metadata.is_admin) {
     redirect("/");
@@ -25,7 +25,7 @@ export default async function AgentsLayout({
       <div className="flex-1 flex w-full">
         <div className="hidden xl:block w-2/12">
           <div className="px-5 space-y-3">
-            <AgentTemplateSidebar agentTemplates={agentsResponse.data!} />
+            {/* <AgentTemplateSidebar agentTemplates={agentsResponse.data!} /> */}
           </div>
         </div>
         {children}
