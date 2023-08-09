@@ -11,8 +11,10 @@ const currencySymbols = {
 
 function PricingCard({
   price,
+  planInterval,
 }: {
   price: Stripe.Price;
+  planInterval: Stripe.Price.Recurring.Interval;
 }) {
   const [loading, setLoading] = useState<boolean>(false);
   const handleSubscription = async (
@@ -52,6 +54,7 @@ function PricingCard({
           }
           {price?.unit_amount! / 100}
         </span>
+        <span>/{planInterval}</span>
       </div>
       <button
         disabled={loading}

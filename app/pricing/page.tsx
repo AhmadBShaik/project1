@@ -19,7 +19,7 @@ export default function Pricing() {
           </p>
         </div>
         <div className="h-1/6"></div>
-        <PricingCards />
+        <PricingCards planInterval={planInterval} />
       </div>
     </section>
   );

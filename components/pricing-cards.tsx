@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import Stripe from "stripe";
 import PricingCard from "./pricing-card";
 
-function PricingCards() {
+function PricingCards({
+  planInterval,
+}: {
+  planInterval: Stripe.Price.Recurring.Interval;
+}) {
   const [prices, setPrices] = useState<Stripe.Price[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const fetchPrices = async () => {
@@ -42,7 +46,7 @@ function PricingCards() {
             ?.filter((price) => price.type === 'one_time')
             ?.map((price) => (
               <li key={price.id}>
-                <PricingCard price={price} />
+                <PricingCard price={price} planInterval={planInterval} />
               </li>
             ))}
         </ul>
