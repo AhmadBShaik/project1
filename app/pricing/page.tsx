@@ -4,8 +4,6 @@ import { useState } from "react";
 import Stripe from "stripe";
 
 export default function Pricing() {
-  const [planInterval, setPlanInterval] =
-    useState<Stripe.Price.Recurring.Interval>("month");
 
   return (
     <section className="flex-1 w-full mx-auto p-5 xl:px-0 flex flex-col">
@@ -19,7 +17,7 @@ export default function Pricing() {
           </p>
         </div>
         <div className="h-1/6"></div>
-        <PricingCards planInterval={planInterval} />
+        <PricingCards />
       </div>
     </section>
   );
