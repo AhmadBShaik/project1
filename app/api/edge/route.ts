@@ -1,25 +1,44 @@
+import { OpenAIStream, OpenAIStreamPayload } from "../../../utils/stream";
+
+if (!process.env.OPEN_API_KEY) {
+  throw new Error("Missing env var from OpenAI");
+}
+
 export const config = {
   runtime: "edge",
 };
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+export async function POST(req: Request) {
+  const { prompt } = (await req.json()) as {
+    prompt?: string;
+  };
 
-const data =
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima obcaecati eius deleniti ex doloribus nihil enim hic, accusantium voluptatem. Asperiores eligendi ex quisquam voluptatibus fuga ut impedit est exercitationem ipsum.";
-export async function POST() {
-  const encoder = new TextEncoder();
+  if (!prompt) {
+    return new Response("No prompt in the request", { status: 400 });
+  }
 
-  const readable = new ReadableStream({
-    async start(controller) {
-      for (let i = 0; i < data.length; i++) {
-        controller.enqueue(encoder.encode(data[i]));
-        await delay(Math.floor(Math.random() * 5 + 1) * 100);
-      }
-      controller.close();
-    },
-  });
+  const payload: OpenAIStreamPayload = {
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: prompt }],
+    temperature: 0.7,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+    max_tokens: 200,
+    stream: true,
+    n: 1,
+  };
 
-  return new Response(readable, {
-    headers: { "Content-Type": "text/html; charset=utf-8" },
+  const stream = await OpenAIStream(payload);
+  // return stream response (SSE)
+  return new Response(stream, {
+    headers: new Headers({
+      // since we don't use browser's EventSource interface, specifying content-type is optional.
+      // the eventsource-parser library can handle the stream response as SSE, as long as the data format complies with SSE:
+      // https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#sending_events_from_the_server
+
+      // 'Content-Type': 'text/event-stream',
+      "Cache-Control": "no-cache",
+    }),
   });
 }

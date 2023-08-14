@@ -20,6 +20,7 @@
     "ai": "^2.1.32",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "eventsource-parser": "^1.0.0",
     "langchain": "^0.0.120",
     "next": "13.4.9",
     "nodemailer": "^6.9.4",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.9",
+    "encoding": "^0.1.13",
     "supabase": "1.77.8"
   }
 }
